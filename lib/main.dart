@@ -1,9 +1,21 @@
+// Import necessary packages and files
 import 'package:flutter/material.dart';
+
+// Import route definitions
+import 'routes.dart';
+
+// Import screens
+import 'about_screen.dart';
+import 'connect_screen.dart';
+import 'events_screen.dart';
+import 'resources_screen.dart';
+import 'support_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+// CustomPageRoute for transition animation
 class CustomPageRoute<T> extends PageRouteBuilder<T> {
   final Widget child;
 
@@ -33,7 +45,7 @@ class CustomPageRoute<T> extends PageRouteBuilder<T> {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +53,24 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Bamboo Warriors Philippines',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.green),
+        // Add more theme settings here if needed
       ),
       home: const HomeScreen(),
       routes: {
-        '/home': (context) => const HomeScreen(),
-        '/about': (context) => const AboutScreen(),
-        '/events': (context) => const EventsScreen(),
-        '/resources': (context) => const ResourcesScreen(),
-        '/connect': (context) => const ConnectScreen(),
-        '/support': (context) => const SupportScreen(),
+        // Define app routes and associate them with screen widgets
+        AppRoutes.home: (context) => const HomeScreen(),
+        AppRoutes.about: (context) => const AboutScreen(),
+        AppRoutes.events: (context) => const EventsScreen(),
+        AppRoutes.resources: (context) => const ResourcesScreen(),
+        AppRoutes.connect: (context) => const ConnectScreen(),
+        AppRoutes.support: (context) => const SupportScreen(),
       },
     );
   }
 }
 
+// Menu widget for appbar
 class BurgerMenu extends StatelessWidget {
   final String activeRoute;
 
@@ -71,7 +85,9 @@ class BurgerMenu extends StatelessWidget {
       child: ListView(
         children: [
           const DrawerHeader(
-            child: Text('Logo'),
+            child: Image(
+              image: AssetImage('assets/logo.png'),
+            ),
           ),
           _buildDrawerItem(context, 'Home', '/home', const HomeScreen()),
           _buildDrawerItem(context, 'About', '/about', const AboutScreen()),
@@ -99,22 +115,26 @@ class BurgerMenu extends StatelessWidget {
       ),
       tileColor: isActive ? Colors.green : null,
       onTap: () {
+        // Navigate to the selected screen with a custom page transition
         Navigator.of(context).pushReplacement(CustomPageRoute(child: screen));
       },
     );
   }
 }
 
+// HomeScreen widget
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
-        //add color to the background
-        backgroundColor: Colors.green,
+        title: const Text(
+          'Home',
+          style: TextStyle(color: Colors.white),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: const BurgerMenu(activeRoute: '/home'),
       body: Container(
@@ -164,71 +184,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('About'),
-      ),
-      drawer: const BurgerMenu(activeRoute: '/about'),
-    );
-  }
-}
-
-class EventsScreen extends StatelessWidget {
-  const EventsScreen({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Events'),
-        ),
-        drawer: const BurgerMenu(activeRoute: '/events'));
-  }
-}
-
-class ResourcesScreen extends StatelessWidget {
-  const ResourcesScreen({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Resources'),
-        ),
-        drawer: const BurgerMenu(activeRoute: '/resources'));
-  }
-}
-
-class ConnectScreen extends StatelessWidget {
-  const ConnectScreen({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Connect'),
-        ),
-        drawer: const BurgerMenu(activeRoute: '/connect'));
-  }
-}
-
-class SupportScreen extends StatelessWidget {
-  const SupportScreen({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Support'),
-        ),
-        drawer: const BurgerMenu(activeRoute: '/support'));
   }
 }
