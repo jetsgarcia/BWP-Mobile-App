@@ -1,5 +1,6 @@
 // Import necessary packages and files
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Import route definitions
 import 'routes.dart';
@@ -13,6 +14,9 @@ import 'support_screen.dart';
 
 void main() {
   runApp(const MyApp());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.black, // status bar color
+  ));
 }
 
 // CustomPageRoute for transition animation
@@ -53,7 +57,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Bamboo Warriors Philippines',
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(backgroundColor: Colors.green),
+        appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.green), // Makes all appbars green
         // Add more theme settings here if needed
       ),
       home: const HomeScreen(),
@@ -137,52 +142,174 @@ class HomeScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: const BurgerMenu(activeRoute: '/home'),
-      body: Container(
-        margin: const EdgeInsets.all(8),
+      body: const SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 100,
-                    color: Colors.green,
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      "Trivia of the day",
-                      style: TextStyle(fontSize: 18),
+            DailyTrivia(),
+            SizedBox(height: 20),
+            UpcomingEvents(),
+            SizedBox(height: 20),
+            LatestUpdates()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Daily trivia widget that is displayed at the top of the home screen
+class DailyTrivia extends StatelessWidget {
+  const DailyTrivia({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(12, 16, 12, 0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.green,
+                  width: 2.0,
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+              ),
+              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Container(
+                      margin: const EdgeInsets.only(bottom: 4),
+                      child: const Text(
+                        "Trivia of the day",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ),
+                    subtitle: const Text(
+                      "Bamboo is the fastest growing plant on earth. It can grow 3 feet in height in 24 hours under appropriate climate conditions.",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class UpcomingEvents extends StatelessWidget {
+  const UpcomingEvents({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(12, 0, 0, 0),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: const Text(
                 "Upcoming Events",
                 style: TextStyle(fontSize: 18),
               ),
             ),
-            Container(
-              height: 200,
-              color: Colors.green,
+          ),
+          SizedBox(
+            height: 270,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: const [
+                SingleEvent(),
+                SingleEvent(),
+                SingleEvent(),
+              ],
             ),
-            const SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SingleEvent extends StatelessWidget {
+  const SingleEvent({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+      width: 250,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          color: Colors.green),
+    );
+  }
+}
+
+class LatestUpdates extends StatelessWidget {
+  const LatestUpdates({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: const Text(
                 "Latest Updates",
                 style: TextStyle(fontSize: 18),
               ),
             ),
-            Container(
-              height: 200,
-              color: Colors.green,
-            )
-          ],
-        ),
+          ),
+          const SingleUpdate(),
+          const SingleUpdate(),
+          const SingleUpdate(),
+          const SingleUpdate(),
+        ],
       ),
+    );
+  }
+}
+
+class SingleUpdate extends StatelessWidget {
+  const SingleUpdate({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+      height: 100,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          color: Colors.green),
     );
   }
 }
