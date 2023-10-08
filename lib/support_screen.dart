@@ -6,15 +6,12 @@ class SupportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Support',
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
+    return const Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppTopBar(title: "Support"),
       ),
-      drawer: const BurgerMenu(activeRoute: '/support'),
+      drawer: BurgerMenu(activeRoute: '/support'),
     );
   }
 }

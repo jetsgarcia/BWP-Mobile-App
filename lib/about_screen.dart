@@ -1,5 +1,9 @@
 import 'package:bwp/main.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final Uri _fbUrl = Uri.parse('https://www.facebook.com/bamboowarriorsph');
+final Uri _websiteUrl = Uri.parse('https://bamboowarriors.ph');
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -7,17 +11,14 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'About',
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppTopBar(title: "About"),
       ),
       drawer: const BurgerMenu(activeRoute: '/about'),
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,16 +112,16 @@ class AboutScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.facebook),
+                          onPressed: () {
+                            launchUrl(_fbUrl);
+                          },
+                          icon: const Icon(Icons.facebook, color: Colors.green),
                         ),
                         IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.facebook),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.facebook),
+                          onPressed: () {
+                            launchUrl(_websiteUrl);
+                          },
+                          icon: const Icon(Icons.language, color: Colors.green),
                         ),
                       ],
                     ),

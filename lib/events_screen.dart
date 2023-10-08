@@ -1,6 +1,5 @@
 import 'package:bwp/main.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class EventsScreen extends StatefulWidget {
   const EventsScreen({Key? key}) : super(key: key);
@@ -10,31 +9,103 @@ class EventsScreen extends StatefulWidget {
 }
 
 class _EventsScreenState extends State<EventsScreen> {
+  // Default selected category
+  String selectedCategory = "Today";
+
+  // Function to update the selected category
+  void selectCategory(String category) {
+    setState(() {
+      selectedCategory = category;
+    });
+  }
+
+  // List of available categories
+  List<String> categories = ["Past", "Today", "Upcoming"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Events',
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppTopBar(title: "Events"),
       ),
+      // Drawer menu
       drawer: const BurgerMenu(activeRoute: '/events'),
-      body: Column(children: [
-        Container(
-          margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-          child: TableCalendar(
-            locale: "en_US",
-            headerStyle: const HeaderStyle(
-                formatButtonVisible: false, titleCentered: true),
-            availableGestures: AvailableGestures.all,
-            focusedDay: DateTime.now(),
-            firstDay: DateTime.utc(2010),
-            lastDay: DateTime.utc(2030),
+      body: Column(
+        children: [
+          // Category selection buttons
+          Container(
+            margin: const EdgeInsets.fromLTRB(12, 16, 12, 0),
+            child: Row(
+              children: categories.map((category) {
+                return Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => selectCategory(category),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        selectedCategory == category
+                            ? Colors.green
+                            : Colors.white,
+                      ),
+                    ),
+                    child: Text(
+                      category,
+                      style: TextStyle(
+                        color: selectedCategory == category
+                            ? Colors.white
+                            : Colors.green,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
           ),
-        ),
-      ]),
+          // Containers for displaying events based on the selected category
+          if (selectedCategory == "Past")
+            Container(
+              margin: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.green),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const ListTile(
+                title: Text("Past Event 1"),
+                subtitle: Text("Event description goes here."),
+              ),
+            ),
+          if (selectedCategory == "Today")
+            Container(
+              margin: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.green),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const ListTile(
+                title: Text("Today Event 1"),
+                subtitle: Text("Event description goes here."),
+              ),
+            ),
+          if (selectedCategory == "Upcoming")
+            Container(
+              margin: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.green),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const ListTile(
+                title: Text("Upcoming Event 1"),
+                subtitle: Text("Event description goes here."),
+              ),
+            ),
+        ],
+      ),
     );
   }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: EventsScreen(),
+  ));
 }

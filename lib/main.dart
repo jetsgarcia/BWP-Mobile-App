@@ -13,9 +13,10 @@ import 'resources_screen.dart';
 import 'support_screen.dart';
 
 void main() {
+  //This function will run the app
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.black, // status bar color
+    statusBarColor: Colors.black,
   ));
 }
 
@@ -59,7 +60,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
             backgroundColor: Colors.green), // Makes all appbars green
-        // Add more theme settings here if needed
       ),
       home: const HomeScreen(),
       routes: {
@@ -89,9 +89,27 @@ class BurgerMenu extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          const DrawerHeader(
-            child: Image(
-              image: AssetImage('assets/logo.png'),
+          UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(color: Colors.white),
+            accountName: const Text(
+              "Sofia Reyes",
+              style: TextStyle(fontSize: 18, color: Colors.green),
+            ),
+            accountEmail: const Text("sofiar@gmail.com",
+                style: TextStyle(fontSize: 14, color: Colors.green)),
+            currentAccountPicture: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.green,
+                  width: 2.0,
+                ),
+              ),
+              child: const CircleAvatar(
+                radius: 100,
+                backgroundImage: NetworkImage(
+                    'https://th.bing.com/th/id/R.ee2077d0513e638c04dfa77bf6f64263?rik=07q%2f6%2bO5ZE0vPg&riu=http%3a%2f%2fwww.world104.com%2fblog%2ftokyoinsider%2fwp-content%2fuploads%2f2011%2f06%2f0045-e0ddc2de.jpg&ehk=kcH%2bIAwbRx5Pz961%2fumkUP3tPdIeBf%2bpfaCEOWP7AxQ%3d&risl=&pid=ImgRaw&r=0'),
+              ),
             ),
           ),
           _buildDrawerItem(context, 'Home', '/home', const HomeScreen()),
@@ -108,6 +126,7 @@ class BurgerMenu extends StatelessWidget {
     );
   }
 
+  // Function for building the drawer items
   ListTile _buildDrawerItem(
       BuildContext context, String title, String route, Widget screen) {
     final isActive = route == activeRoute;
@@ -127,22 +146,19 @@ class BurgerMenu extends StatelessWidget {
   }
 }
 
-// HomeScreen widget
+// Home screen widget
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Home',
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white),
+    return const Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppTopBar(title: "Home"),
       ),
-      drawer: const BurgerMenu(activeRoute: '/home'),
-      body: const SingleChildScrollView(
+      drawer: BurgerMenu(activeRoute: '/home'),
+      body: SingleChildScrollView(
         child: Column(
           children: [
             DailyTrivia(),
@@ -153,6 +169,26 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class AppTopBar extends StatelessWidget {
+  final String title;
+
+  const AppTopBar({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      actions: [
+        IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+      ],
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.white),
+      ),
+      iconTheme: const IconThemeData(color: Colors.white),
     );
   }
 }
@@ -227,7 +263,7 @@ class UpcomingEvents extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(bottom: 8),
               child: const Text(
-                "Upcoming Events",
+                "Events",
                 style: TextStyle(fontSize: 18),
               ),
             ),
