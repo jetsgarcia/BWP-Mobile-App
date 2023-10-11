@@ -5,4 +5,5 @@ class AppRoutes {
   static const String resources = '/resources';
   static const String connect = '/connect';
   static const String support = '/support';
+  static const String settings = '/settings';
 }

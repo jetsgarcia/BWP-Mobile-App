@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "471630571571",
+    "project_id": "bamboo-warriors",
+    "storage_bucket": "bamboo-warriors.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471630571571:android:c66a7de08137451e009b46",
+        "android_client_info": {
+          "package_name": "com.jetter.bwp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-JgZEP7gCn0lHMm2bXDwod4L7iBno0RM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

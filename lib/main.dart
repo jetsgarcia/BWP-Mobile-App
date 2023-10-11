@@ -2,18 +2,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Import firebase packages
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 // Import route definitions
 import 'routes.dart';
 
 // Import screens
-import 'about_screen.dart';
-import 'connect_screen.dart';
-import 'events_screen.dart';
-import 'resources_screen.dart';
-import 'support_screen.dart';
+import 'package:bwp/screens/about/about_screen.dart';
+import 'package:bwp/screens/connect/connect_screen.dart';
+import 'package:bwp/screens/events/events_screen.dart';
+import 'package:bwp/screens/resources/resources_screen.dart';
+import 'package:bwp/screens/support/support_screen.dart';
+import 'package:bwp/screens/settings/settings_screen.dart';
 
-void main() {
-  //This function will run the app
+import 'screens/home/home_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print('Error initializing Firebase: $e');
+  }
+
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.black,
@@ -49,6 +65,7 @@ class CustomPageRoute<T> extends PageRouteBuilder<T> {
         );
 }
 
+// Main app widget
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -70,6 +87,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.resources: (context) => const ResourcesScreen(),
         AppRoutes.connect: (context) => const ConnectScreen(),
         AppRoutes.support: (context) => const SupportScreen(),
+        AppRoutes.settings: (context) => const SettingsScreen(),
       },
     );
   }
@@ -80,9 +98,9 @@ class BurgerMenu extends StatelessWidget {
   final String activeRoute;
 
   const BurgerMenu({
-    super.key,
+    Key? key,
     required this.activeRoute,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,30 +130,41 @@ class BurgerMenu extends StatelessWidget {
               ),
             ),
           ),
-          _buildDrawerItem(context, 'Home', '/home', const HomeScreen()),
-          _buildDrawerItem(context, 'About', '/about', const AboutScreen()),
-          _buildDrawerItem(context, 'Events', '/events', const EventsScreen()),
           _buildDrawerItem(
-              context, 'Resources', '/resources', const ResourcesScreen()),
+              context, Icons.home, 'Home', '/home', const HomeScreen()),
           _buildDrawerItem(
-              context, 'Connect', '/connect', const ConnectScreen()),
+              context, Icons.info, 'About', '/about', const AboutScreen()),
           _buildDrawerItem(
-              context, 'Support', '/support', const SupportScreen()),
+              context, Icons.event, 'Events', '/events', const EventsScreen()),
+          _buildDrawerItem(context, Icons.library_books, 'Resources',
+              '/resources', const ResourcesScreen()),
+          _buildDrawerItem(context, Icons.people, 'Connect', '/connect',
+              const ConnectScreen()),
+          _buildDrawerItem(context, Icons.favorite, 'Support', '/support',
+              const SupportScreen()),
+          _buildDrawerItem(context, Icons.settings, 'Settings', '/settings',
+              const SettingsScreen()),
         ],
       ),
     );
   }
 
-  // Function for building the drawer items
-  ListTile _buildDrawerItem(
-      BuildContext context, String title, String route, Widget screen) {
+  // Function for building the drawer items with icons
+  ListTile _buildDrawerItem(BuildContext context, IconData icon, String title,
+      String route, Widget screen) {
     final isActive = route == activeRoute;
     return ListTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          color: isActive ? Colors.white : Colors.black,
-        ),
+      title: Row(
+        children: <Widget>[
+          Icon(icon, color: isActive ? Colors.white : null),
+          const SizedBox(width: 16), // Adjust this value to control the spacing
+          Text(
+            title,
+            style: TextStyle(
+              color: isActive ? Colors.white : Colors.black,
+            ),
+          ),
+        ],
       ),
       tileColor: isActive ? Colors.green : null,
       onTap: () {
@@ -146,33 +175,7 @@ class BurgerMenu extends StatelessWidget {
   }
 }
 
-// Home screen widget
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: AppTopBar(title: "Home"),
-      ),
-      drawer: BurgerMenu(activeRoute: '/home'),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            DailyTrivia(),
-            SizedBox(height: 20),
-            UpcomingEvents(),
-            SizedBox(height: 20),
-            LatestUpdates()
-          ],
-        ),
-      ),
-    );
-  }
-}
-
+// Custom appbar widget
 class AppTopBar extends StatelessWidget {
   final String title;
 
@@ -189,163 +192,6 @@ class AppTopBar extends StatelessWidget {
         style: const TextStyle(color: Colors.white),
       ),
       iconTheme: const IconThemeData(color: Colors.white),
-    );
-  }
-}
-
-// Daily trivia widget that is displayed at the top of the home screen
-class DailyTrivia extends StatelessWidget {
-  const DailyTrivia({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(12, 16, 12, 0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.green,
-                  width: 2.0,
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              ),
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Container(
-                      margin: const EdgeInsets.only(bottom: 4),
-                      child: const Text(
-                        "Trivia of the day",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.green,
-                        ),
-                      ),
-                    ),
-                    subtitle: const Text(
-                      "Bamboo is the fastest growing plant on earth. It can grow 3 feet in height in 24 hours under appropriate climate conditions.",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class UpcomingEvents extends StatelessWidget {
-  const UpcomingEvents({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(12, 0, 0, 0),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: const Text(
-                "Events",
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 270,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                SingleEvent(),
-                SingleEvent(),
-                SingleEvent(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SingleEvent extends StatelessWidget {
-  const SingleEvent({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-      width: 250,
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          color: Colors.green),
-    );
-  }
-}
-
-class LatestUpdates extends StatelessWidget {
-  const LatestUpdates({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: const Text(
-                "Latest Updates",
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-          ),
-          const SingleUpdate(),
-          const SingleUpdate(),
-          const SingleUpdate(),
-          const SingleUpdate(),
-        ],
-      ),
-    );
-  }
-}
-
-class SingleUpdate extends StatelessWidget {
-  const SingleUpdate({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-      height: 100,
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          color: Colors.green),
     );
   }
 }
