@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:bwp/main.dart';
 
-class ConnectScreen extends StatelessWidget {
-  const ConnectScreen({Key? key}) : super(key: key);
+// Import widgets
+import 'package:bwp/screens/app/user/universal_widgets.dart';
+
+class UserConnect extends StatelessWidget {
+  const UserConnect({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,14 @@
-import 'package:bwp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+// Import widgets
+import 'package:bwp/screens/app/user/universal_widgets.dart';
 
 final Uri _fbUrl = Uri.parse('https://www.facebook.com/bamboowarriorsph');
 final Uri _websiteUrl = Uri.parse('https://bamboowarriors.ph');
 
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+class UserAbout extends StatelessWidget {
+  const UserAbout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +25,13 @@ class AboutScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 12),
-                height: 200,
-                width: double.infinity,
-                color: Colors.green,
+              Center(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 12),
+                  height: 230,
+                  width: double.infinity,
+                  child: Image.asset('assets/people.png'),
+                ),
               ),
               const SizedBox(height: 20),
               const Header(text: "Who We Are"),
@@ -75,7 +79,7 @@ class AboutScreen extends StatelessWidget {
                     height: 140,
                     width: 140,
                     margin: const EdgeInsets.only(right: 8),
-                    color: Colors.green,
+                    child: Image.asset('assets/emblem.png'),
                   ),
                   const Expanded(
                     child: Column(

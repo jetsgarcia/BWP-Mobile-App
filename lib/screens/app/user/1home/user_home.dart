@@ -1,14 +1,14 @@
-// Import necessary packages and files
-
-import 'package:bwp/main.dart';
+// Import necessary packages
 import 'package:flutter/material.dart';
 
+// Import widgets
+import 'package:bwp/screens/app/user/universal_widgets.dart';
 import 'daily_trivia.dart';
 import 'latest_updates.dart';
 import 'upcoming_events.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class UserHome extends StatelessWidget {
+  const UserHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

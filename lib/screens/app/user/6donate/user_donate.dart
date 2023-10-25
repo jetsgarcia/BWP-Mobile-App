@@ -1,15 +1,17 @@
-import 'package:bwp/main.dart';
 import 'package:flutter/material.dart';
 
-class SupportScreen extends StatelessWidget {
-  const SupportScreen({Key? key}) : super(key: key);
+// Import widgets
+import 'package:bwp/screens/app/user/universal_widgets.dart';
+
+class UserDonate extends StatelessWidget {
+  const UserDonate({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: AppTopBar(title: "Support"),
+        child: AppTopBar(title: "Donate"),
       ),
       drawer: BurgerMenu(activeRoute: '/support'),
     );
