@@ -12,45 +12,51 @@ class UserConnect extends StatelessWidget {
         child: AppTopBar(title: "Connect"),
       ),
       drawer: const BurgerMenu(activeRoute: '/connect'),
-      body: ListView(
-        children: <Widget>[
-          const SizedBox(height: 16),
-          const Center(child: Text("Members:", style: TextStyle(fontSize: 16))),
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: const Row(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 16),
+            const Center(
+              child: Text("Members:", style: TextStyle(fontSize: 16)),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              child: const Row(
+                children: <Widget>[
+                  Expanded(
+                    child:
+                        Profile(name: 'Alice', imagePath: 'assets/alice.jpg'),
+                  ),
+                  Expanded(
+                    child: Profile(name: 'Bob', imagePath: 'assets/bob.jpg'),
+                  ),
+                ],
+              ),
+            ),
+            const Row(
               children: <Widget>[
                 Expanded(
-                  child: Profile(name: 'Alice', imagePath: 'assets/alice.jpg'),
+                  child:
+                      Profile(name: 'Charlie', imagePath: 'assets/charlie.jpg'),
                 ),
                 Expanded(
-                  child: Profile(name: 'Bob', imagePath: 'assets/bob.jpg'),
+                  child: Profile(name: 'David', imagePath: 'assets/david.jpg'),
                 ),
               ],
             ),
-          ),
-          const Row(
-            children: <Widget>[
-              Expanded(
-                child:
-                    Profile(name: 'Charlie', imagePath: 'assets/charlie.jpg'),
-              ),
-              Expanded(
-                child: Profile(name: 'David', imagePath: 'assets/david.jpg'),
-              ),
-            ],
-          ),
-          const Row(
-            children: <Widget>[
-              Expanded(
-                child: Profile(name: 'Olivia', imagePath: 'assets/olivia.jpg'),
-              ),
-              Expanded(
-                child: Profile(name: 'Noah', imagePath: 'assets/noah.jpg'),
-              ),
-            ],
-          ),
-        ],
+            const Row(
+              children: <Widget>[
+                Expanded(
+                  child:
+                      Profile(name: 'Olivia', imagePath: 'assets/olivia.jpg'),
+                ),
+                Expanded(
+                  child: Profile(name: 'Noah', imagePath: 'assets/noah.jpg'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

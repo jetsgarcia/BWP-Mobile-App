@@ -10,21 +10,36 @@ class UserEvents extends StatefulWidget {
 }
 
 class _UserEventsState extends State<UserEvents> {
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    EventData.loadEvents();
+    _loadEvents();
+  }
+
+  Future<void> _loadEvents() async {
+    await EventData.loadEvents();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: AppTopBar(title: "Events"),
       ),
       drawer: BurgerMenu(activeRoute: '/events'),
-      body: EventList(),
+      body: isLoading ? _buildLoading() : EventList(),
+    );
+  }
+
+  Widget _buildLoading() {
+    return Center(
+      child: CircularProgressIndicator(),
     );
   }
 }
@@ -37,9 +52,7 @@ class EventList extends StatelessWidget {
     final events = EventData.events;
 
     return events.isEmpty
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
+        ? Center(child: Text('No events available'))
         : ListView.builder(
             itemCount: events.length,
             itemBuilder: (context, index) {

@@ -18,10 +18,9 @@ class UserProfile extends StatelessWidget {
         ),
       ),
       body: Center(
-          child: Expanded(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.all(20.0),
@@ -48,7 +47,7 @@ class UserProfile extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all(Colors.green),
               ),
               onPressed: () {
-                // Your sign-out logic here
+                // Sign out
                 AuthManager().signOut();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => const Authenticate(),
@@ -59,7 +58,7 @@ class UserProfile extends StatelessWidget {
             const SizedBox(height: 120.0)
           ],
         ),
-      )),
+      ),
     );
   }
 }
