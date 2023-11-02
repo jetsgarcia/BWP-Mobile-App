@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Import widgets
-import 'package:bwp/screens/app/user/universal_widgets.dart';
+import 'package:bwp/screens/widgets/universal_widgets.dart';
 
 final Uri _fbUrl = Uri.parse('https://www.facebook.com/bamboowarriorsph');
 final Uri _websiteUrl = Uri.parse('https://bamboowarriors.ph');

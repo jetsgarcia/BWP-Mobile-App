@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:bwp/screens/widgets/events_data.dart';
 
 class UpcomingEvents extends StatelessWidget {
-  const UpcomingEvents({
-    super.key,
-  });
+  const UpcomingEvents({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final events = EventData.events;
+
     return Column(
       children: [
         Align(
@@ -22,27 +23,34 @@ class UpcomingEvents extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 270,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              Container(
-                  margin: const EdgeInsets.fromLTRB(12, 0, 0, 0),
-                  child: const SingleEvent(
-                      image: 'assets/bamboo_summit.png',
-                      title: 'Bamboo Summit',
-                      description:
-                          'An international gathering celebrating bamboo\'s sustainable potential.')),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
-                child: const SingleEvent(
-                    image: 'assets/bamboo_expo.png',
-                    title: 'Bamboo Expo',
-                    description:
-                        'Highlighting the versatility and sustainability of bamboo through innovative products and art'),
+        Visibility(
+          visible:
+              events.isEmpty, // Show loading indicator when events are empty
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+        Visibility(
+          visible: events.isNotEmpty, // Show events when they are available
+          child: SizedBox(
+            height: 270,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  for (final event in events)
+                    SingleEvent(
+                      image: event[
+                          'Image'], // Replace 'image' with your actual field name
+                      title: event[
+                          'Title'], // Replace 'title' with your actual field name
+                      description: event[
+                          'Description'], // Replace 'description' with your actual field name
+                    ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ],

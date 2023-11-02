@@ -1,4 +1,4 @@
-import 'package:bwp/screens/app/inner_wrapper.dart';
+import 'package:bwp/screens/1home/user_home.dart';
 import 'package:bwp/screens/authenticate/authenticate.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +16,7 @@ class Wrapper extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else if (userSnapshot.hasData) {
           // If the user is authenticated, show the authenticated content.
-          return const InnerWrapper();
+          return const UserHome();
         } else {
           // If the user is not authenticated, show the authentication screen.
           return const Authenticate();

@@ -1,13 +1,14 @@
+import 'package:bwp/screens/7notifications/notification.dart';
+import 'package:bwp/screens/8profile/profile.dart';
 import 'package:flutter/material.dart';
 
 // import screens
-import 'package:bwp/screens/app/user/1home/user_home.dart';
-import 'package:bwp/screens/app/user/2about/user_about.dart';
-import 'package:bwp/screens/app/user/3events/user_events.dart';
-import 'package:bwp/screens/app/user/4resources/user_resources.dart';
-import 'package:bwp/screens/app/user/5connect/user_connect.dart';
-import 'package:bwp/screens/app/user/6donate/user_donate.dart';
-import 'package:bwp/screens/app/user/7settings/user_settings.dart';
+import 'package:bwp/screens/1home/user_home.dart';
+import 'package:bwp/screens/2about/user_about.dart';
+import 'package:bwp/screens/3events/user_events.dart';
+import 'package:bwp/screens/4resources/user_resources.dart';
+import 'package:bwp/screens/5connect/user_connect.dart';
+import 'package:bwp/screens/6donate/user_donate.dart';
 
 class CustomPageRoute<T> extends PageRouteBuilder<T> {
   final Widget child;
@@ -51,6 +52,8 @@ class BurgerMenu extends StatelessWidget {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
+            onDetailsPressed: () => Navigator.of(context)
+                .push(CustomPageRoute(child: const UserProfile())),
             decoration: const BoxDecoration(color: Colors.white),
             accountName: const Text(
               "Sofia Reyes",
@@ -68,8 +71,7 @@ class BurgerMenu extends StatelessWidget {
               ),
               child: const CircleAvatar(
                 radius: 100,
-                backgroundImage: NetworkImage(
-                    'https://th.bing.com/th/id/R.ee2077d0513e638c04dfa77bf6f64263?rik=07q%2f6%2bO5ZE0vPg&riu=http%3a%2f%2fwww.world104.com%2fblog%2ftokyoinsider%2fwp-content%2fuploads%2f2011%2f06%2f0045-e0ddc2de.jpg&ehk=kcH%2bIAwbRx5Pz961%2fumkUP3tPdIeBf%2bpfaCEOWP7AxQ%3d&risl=&pid=ImgRaw&r=0'),
+                backgroundImage: AssetImage('assets/sofia.jpg'),
               ),
             ),
           ),
@@ -80,7 +82,6 @@ class BurgerMenu extends StatelessWidget {
               context, Icons.library_books, 'Resources', '/resources'),
           _buildDrawerItem(context, Icons.people, 'Connect', '/connect'),
           _buildDrawerItem(context, Icons.favorite, 'Donate', '/support'),
-          _buildDrawerItem(context, Icons.settings, 'Settings', '/settings'),
         ],
       ),
     );
@@ -109,8 +110,8 @@ class BurgerMenu extends StatelessWidget {
       case '/support':
         screen = const UserDonate();
         break;
-      case '/settings':
-        screen = const UserSettings();
+      case '/profile':
+        screen = const UserProfile();
         break;
       default:
         screen = const UserHome();
@@ -145,7 +146,12 @@ class AppTopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+        IconButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(CustomPageRoute(child: const UserNotification()));
+            },
+            icon: const Icon(Icons.notifications)),
       ],
       title: Text(
         title,
