@@ -1,7 +1,4 @@
-// Import necessary packages
 import 'package:flutter/material.dart';
-
-// Import widgets
 import 'package:bwp/screens/widgets/universal_widgets.dart';
 import 'daily_trivia.dart';
 import 'latest_updates.dart';

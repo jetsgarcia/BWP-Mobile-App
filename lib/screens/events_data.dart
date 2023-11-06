@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// For querying data fromm firestore
 class EventData {
   static List<Map<String, String>> events = [];
 

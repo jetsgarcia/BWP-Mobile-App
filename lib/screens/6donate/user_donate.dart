@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-// Import widgets
 import 'package:bwp/screens/widgets/universal_widgets.dart';
 
 class UserDonate extends StatelessWidget {

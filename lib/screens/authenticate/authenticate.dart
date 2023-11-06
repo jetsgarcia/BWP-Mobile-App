@@ -120,6 +120,10 @@ class _AuthenticateState extends State<Authenticate> {
     );
   }
 
+// =================================================================
+// =================================================================
+// =================================================================
+
   // Function to handle user sign-in
   Future<void> _signIn() async {
     if (email.isEmpty || password.isEmpty) {

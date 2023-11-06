@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bwp/screens/widgets/events_data.dart';
+import 'package:bwp/screens/events_data.dart';
 import 'package:bwp/screens/widgets/universal_widgets.dart';
 
 class UserEvents extends StatefulWidget {
@@ -28,17 +28,17 @@ class _UserEventsState extends State<UserEvents> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: AppTopBar(title: "Events"),
       ),
-      drawer: BurgerMenu(activeRoute: '/events'),
-      body: isLoading ? _buildLoading() : EventList(),
+      drawer: const BurgerMenu(activeRoute: '/events'),
+      body: isLoading ? _buildLoading() : const EventList(),
     );
   }
 
   Widget _buildLoading() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
@@ -52,7 +52,7 @@ class EventList extends StatelessWidget {
     final events = EventData.events;
 
     return events.isEmpty
-        ? Center(child: Text('No events available'))
+        ? const Center(child: Text('No events available'))
         : ListView.builder(
             itemCount: events.length,
             itemBuilder: (context, index) {

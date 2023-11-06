@@ -28,15 +28,15 @@ class UpcomingEvents extends StatelessWidget {
       future: EventData.loadEvents(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
-          return Center(
+          return const Center(
             child: Text('Error fetching data'),
           );
         } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-          return Center(
+          return const Center(
             child: Text('No upcoming events available'),
           );
         } else {
@@ -58,7 +58,7 @@ class UpcomingEvents extends StatelessWidget {
               SizedBox(
                 height: 270,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
@@ -79,8 +79,6 @@ class UpcomingEvents extends StatelessWidget {
     );
   }
 }
-
-// Single event widget remains the same...
 
 // Single event widget that is displayed in the upcoming events widget
 class SingleEvent extends StatelessWidget {

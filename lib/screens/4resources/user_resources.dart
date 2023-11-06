@@ -157,8 +157,7 @@ class _UserResourcesState extends State<UserResources> {
                     height: 437,
                     child: Image.asset(
                       'assets/ebook1.png',
-                      fit: BoxFit
-                          .cover, // You can use different BoxFit options based on your needs
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ],

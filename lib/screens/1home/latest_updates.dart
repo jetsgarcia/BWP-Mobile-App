@@ -1,5 +1,3 @@
-// Import necessary packages and files
-
 import 'package:flutter/material.dart';
 
 class LatestUpdates extends StatelessWidget {
